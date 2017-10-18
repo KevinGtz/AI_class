@@ -78,32 +78,64 @@ for color in colors_t_ch:
 for i in range(color_number):
 
     colors_t_ch_2 = colors_t_ch
+    colors_t_ch_3 = colors_t_ch
 
     # Here we select the main color and the main node
     mn = int(most_common(nodes))
     print mn
-    mc = random.choice(colors_t_ch_2)
+    if len(colors_t_ch_2) >= 1:
+        mc = random.choice(colors_t_ch_2)
     print mc
+
+    second_color = []
+    for color in colors_t_ch_3:
+        if color != mc:
+            second_color.append(color)
+            print second_color
 
     # Here we assing the main color to the main node
     for dic in relations_complete:
-        for node in dic:
+        for node, colors in dic.items():
             if node == mn:
                 dic[mn] = mc
-                print(dic)
+                print dic
+            # elif dic[node] == mn + 1 or dic[node] == mn - 1:
+            #     if (second_color) >= 1:
+            #         dic[node] = second_color[0]
+            #         print(dic)
+
+    for dic in relations_complete:
+        for node, colors in dic.items():
+            if dic.has_key(mn) and colors != mc:
+                if len(second_color) > 1:
+                    dic[node] = second_color[1]
+                if len(second_color) > 0:
+                    print 'hola2'
+                    dic[node] = second_color[0]
+                    print "---",node, "---"
+                    print dic
+
+
 
     for node in nodes:
         if node == mn:
             nodes.remove(mn)
 
-    colors_t_ch_2.remove(mc)
+    if len(colors_t_ch_2) >= 1:
+        colors_t_ch_2.remove(mc)
 
 print a_test
 
+# a_color_list = []
+#
 # for dic in relations_complete:
-#     for node in dic:
-#         if dic[node] == 'default':
-#             dic[node] = random.choice(a_test)
+#     for this_color in a_test:
+#         for node, colors in dic.items():
+#             a_color_list.append(colors)
+#             # for color in a_color_list:
+#             #     if color != this_color:
+#             #         color = this_color
+#             print dic
 
 
 # print relations_complete
@@ -116,18 +148,17 @@ for relation in relations_incomplete:
         nodes_2.append(node)
 
 for node in nodes_2:
-
-
-print nodes_2
+    if node not in nodes_3:
+        nodes_3.append(node)
 
 for dic in relations_complete:
     for node in dic:
-        if node in nodes_2:
+        if node in nodes_3:
             print(node, ':', dic[node])
-        nodes_2.remove(node)
 
+            if nodes_3 != 0:
+                nodes_3.remove(node)
 # print (relations_incomplete)
 # print (relations_complete)
 # print nodes
-
 #print(cities_number, type(color_number))
