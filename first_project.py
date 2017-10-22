@@ -3,7 +3,7 @@
 # This program is for my school for the class of AI
 import random
 
-from functions import most_common
+from functions import most_common, less_common
 
 '''
 Rules
@@ -48,14 +48,7 @@ while True:
 relations_incomplete = []
 relations_complete = []
 nodes = []
-# nodes_2 = []
-# nodes_3 = []
-# nodes_4 = []
-# nodes_5 = []
-# nodes_6 = []
-# nodes_7 = []
-# nodes_8 = []
-# nodes_9 = []
+nodes_4 = []
 
 for relation in range(relationships_number):
     the_relation = input('Dame los nodos que se relacionan, separados por una coma: \n')
@@ -65,6 +58,7 @@ for relation in relations_incomplete:
     relations_complete.append({})
     for node in relation:
         nodes.append(node)
+        nodes_4.append(node)
         for dic in relations_complete:
             if len(dic) < 2:
                 dic[node] = 'default'
@@ -95,27 +89,14 @@ for i in range(color_number):
 
     # Here we assing the main color to the main node
     for dic in relations_complete:
-        for node, colors in dic.items():
-            if node == mn:
-                dic[mn] = mc
-                print dic
-            # elif dic[node] == mn + 1 or dic[node] == mn - 1:
-            #     if (second_color) >= 1:
-            #         dic[node] = second_color[0]
-            #         print(dic)
+        if dic.has_key(mn):
+            dic[mn] = mc
+        print dic
 
-    for dic in relations_complete:
         for node, colors in dic.items():
-            if dic.has_key(mn) and colors != mc:
-                if len(second_color) > 1:
-                    dic[node] = second_color[1]
-                if len(second_color) > 0:
-                    print 'hola2'
+            if dic.has_key(mn) and colors == 'default':
+                if len(second_color) >= 1:
                     dic[node] = second_color[0]
-                    print "---",node, "---"
-                    print dic
-
-
 
     for node in nodes:
         if node == mn:
@@ -124,7 +105,55 @@ for i in range(color_number):
     if len(colors_t_ch_2) >= 1:
         colors_t_ch_2.remove(mc)
 
-print a_test
+for i in range(color_number):
+    colors_t_ch_2 = a_test
+    colors_t_ch_3 = a_test
+
+    minor_n = int(less_common(nodes_4))
+    print minor_n
+    mn = int(most_common(nodes_4))
+    print mn
+    if len(colors_t_ch_2) > 1:
+        minor_c = random.choice(colors_t_ch_2)
+        for dic in relations_complete:
+            if dic.has_key(mn):
+                while True:
+                    if dic[mn] != minor_c:
+                        break
+                    else:
+                        minor_c = random.choice(colors_t_ch_2)
+
+    print minor_c
+
+    second_color = []
+    for color in colors_t_ch_3:
+        if color != minor_c:
+            second_color.append(color)
+            print second_color
+
+    for dic in relations_complete:
+        if dic.has_key(minor_n):
+            dic[minor_n] = minor_c
+        print dic
+
+        for node, colors in dic.items():
+            if dic.has_key(minor_n) and colors == 'default':
+                if len(second_color) >= 1:
+                    dic[node] = second_color[0]
+
+    for node in nodes:
+        if node == minor_n:
+            nodes_4.remove(minor_n)
+            print nodes_4
+        elif node == mn:
+            nodes_4.remove(mn)
+            print nodes_4
+
+    if len(colors_t_ch_2) > 1:
+        colors_t_ch_2.remove(minor_c)
+
+
+# print a_test
 
 # a_color_list = []
 #
@@ -136,6 +165,8 @@ print a_test
 #             #     if color != this_color:
 #             #         color = this_color
 #             print dic
+
+print relations_complete
 
 
 # print relations_complete
