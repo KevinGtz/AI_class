@@ -76,81 +76,104 @@ for i in range(color_number):
 
     # Here we select the main color and the main node
     mn = int(most_common(nodes))
+    minor_n = int(less_common(nodes_4))
     print mn
-    if len(colors_t_ch_2) >= 1:
-        mc = random.choice(colors_t_ch_2)
+    print minor_n
+
+    mc = random.choice(colors_t_ch_2)
+    minor_c = random.choice(colors_t_ch_2)
+
+    while mc == minor_c:
+            mc = random.choice(colors_t_ch_2)
+            minor_c = random.choice(colors_t_ch_2)
+
     print mc
+    print minor_c
 
     second_color = []
     for color in colors_t_ch_3:
-        if color != mc:
-            second_color.append(color)
-            print second_color
+        if color_number > 2:
+            if color != mc and color != minor_c:
+                second_color.append(color)
+                print second_color
+        else:
+            if color != mc:
+                second_color.append(color)
+                print second_color
 
     # Here we assing the main color to the main node
     for dic in relations_complete:
         if dic.has_key(mn):
             dic[mn] = mc
+        elif dic.has_key(minor_n):
+            dic[minor_n] = minor_c
+        # for node, colors in dic.items():
+        #     if colors == colors:
+
         print dic
 
         for node, colors in dic.items():
             if dic.has_key(mn) and colors == 'default':
-                if len(second_color) >= 1:
+                if len(second_color) > 2:
                     dic[node] = second_color[0]
+            elif dic.has_key(minor_n) and colors == 'default':
+                if len(second_color) > 2:
+                    dic[node] = second_color[1]
 
     for node in nodes:
         if node == mn:
             nodes.remove(mn)
-
-    if len(colors_t_ch_2) >= 1:
-        colors_t_ch_2.remove(mc)
-
-for i in range(color_number):
-    colors_t_ch_2 = a_test
-    colors_t_ch_3 = a_test
-
-    minor_n = int(less_common(nodes_4))
-    print minor_n
-    mn = int(most_common(nodes_4))
-    print mn
-    if len(colors_t_ch_2) > 1:
-        minor_c = random.choice(colors_t_ch_2)
-        for dic in relations_complete:
-            if dic.has_key(mn):
-                while True:
-                    if dic[mn] != minor_c:
-                        break
-                    else:
-                        minor_c = random.choice(colors_t_ch_2)
-
-    print minor_c
-
-    second_color = []
-    for color in colors_t_ch_3:
-        if color != minor_c:
-            second_color.append(color)
-            print second_color
-
-    for dic in relations_complete:
-        if dic.has_key(minor_n):
-            dic[minor_n] = minor_c
-        print dic
-
-        for node, colors in dic.items():
-            if dic.has_key(minor_n) and colors == 'default':
-                if len(second_color) >= 1:
-                    dic[node] = second_color[0]
-
-    for node in nodes:
-        if node == minor_n:
+        elif node == minor_n:
             nodes_4.remove(minor_n)
-            print nodes_4
-        elif node == mn:
-            nodes_4.remove(mn)
-            print nodes_4
 
-    if len(colors_t_ch_2) > 1:
-        colors_t_ch_2.remove(minor_c)
+    # if len(colors_t_ch_2) >= 1:
+    #     colors_t_ch_2.remove(mc)
+
+# for i in range(color_number):
+#     colors_t_ch_2 = a_test
+#     colors_t_ch_3 = a_test
+#
+#     minor_n = int(less_common(nodes_4))
+#     print nodes_4
+#     print minor_n
+#     mn = int(most_common(nodes_4))
+#     print mn
+#     minor_c = random.choice(colors_t_ch_2)
+#     for dic in relations_complete:
+#         if dic.has_key(mn):
+#             while True:
+#                 if dic[mn] != minor_c:
+#                     break
+#                 else:
+#                     minor_c = random.choice(colors_t_ch_2)
+#
+#     print minor_c
+#
+#     second_color = []
+#     for color in colors_t_ch_3:
+#         if color != minor_c:
+#             second_color.append(color)
+#             print second_color
+#
+#     for dic in relations_complete:
+#         if dic.has_key(minor_n):
+#             dic[minor_n] = minor_c
+#         print dic
+#
+#         for node, colors in dic.items():
+#             if dic.has_key(minor_n) and colors == 'default':
+#                 dic[node] = second_color[0]
+#
+#     for node in nodes:
+#         if node == minor_n:
+#             nodes_4.remove(minor_n)
+#             print nodes_4
+#         elif node == mn:
+#             nodes_4.remove(mn)
+#             print nodes_4
+
+    # if len(colors_t_ch_2) > 1:
+    #     colors_t_ch_2.remove(minor_c)
 
 
 # print a_test
