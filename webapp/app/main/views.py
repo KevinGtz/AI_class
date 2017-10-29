@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from . import main
 from .forms import MainForm
-from ..logic import process_the_info
+from ..project import process_the_info
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
