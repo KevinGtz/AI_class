@@ -147,20 +147,27 @@ def process_the_info(c_i, c_o, r_n, t_r):
 
     nodes_2 = []
     nodes_3 = []
+    result = []
 
     for relation in relations_incomplete:
         for node in relation:
-            nodes_2.append(node)
+            try:
+                nodes_2.append(int(node))
+            except: pass
 
     for node in nodes_2:
         if node not in nodes_3:
-            nodes_3.append(node)
+            nodes_3.append(int(node))
+    print nodes_3
 
-    for dic in relations_complete:
-        for node in dic:
+    for relation in relations_complete:
+        for node in relation:
             if node in nodes_3:
-                result = (node, ':', dic[node])
-                print result
+                result.append({})
+                for dic in result:
+                    if len(dic) < 1:
+                        dic[node] = relation[node]
 
                 if nodes_3 != 0:
                     nodes_3.remove(node)
+    return result
