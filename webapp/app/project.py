@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+from time import clock
 
 from functions import most_common, less_common
 
@@ -88,9 +89,12 @@ def process_the_info(c_i, c_o, r_n, t_r):
         mc = random.choice(colors_t_ch_2)
         minor_c = random.choice(colors_t_ch_3)
 
+        the_time = clock()
         while mc == minor_c:
                 mc = random.choice(colors_t_ch_2)
                 minor_c = random.choice(colors_t_ch_3)
+                if (the_time + .005 < clock()):
+                    break
 
         print (mc, 'color principal')
         print (minor_c, 'color menor')
