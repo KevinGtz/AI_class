@@ -13,11 +13,10 @@ def index():
         t_r = form.relations.data
         flash('ok')
         results = process_the_info(c_i, c_o, n_r, t_r)
-        return redirect(url_for('.results', results=results))
+        return redirect(url_for('.result', result=result))
 
     return render_template('index.html', form=form)
 
-@main.route('/results/<results>', methods=['GET'])
-def results(*args):
-
-    return render_template('results.html', results=results)
+@main.route('/result/<result>', methods=['GET'])
+def result(result):
+    return render_template('results.html', result=result)

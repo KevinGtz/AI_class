@@ -50,49 +50,62 @@ def process_the_info(c_i, c_o, r_n, t_r):
     for relation in relations_incomplete:
         relations_complete.append({})
         for node in relation:
-            if node not in ['-', ',']:
+            try:
                 nodes.append(int(node))
-                print (nodes, "Los nodos originales")
                 nodes_4.append(int(node))
-                print (nodes_4, "Nodos 4")
                 for dic in relations_complete:
                     if len(dic) < 2:
                         dic[int(node)] = 'default'
-                        print (dic, "diccionario")
+            except: node
+    print 'the nodes are %s' % nodes
 
     colors_t_ch = random.sample(colors, color_number)
 
-    a_test = []
+    colors_1 = []
+    colors_2 = []
+    colors_3 = []
+    colors_4 = []
     for color in colors_t_ch:
-        a_test.append(color)
+        colors_1.append(color)
+        colors_2.append(color)
+        colors_3.append(color)
 
     for i in range(color_number):
 
-        colors_t_ch_2 = colors_t_ch
-        colors_t_ch_3 = colors_t_ch
+        colors_t_ch_2 = colors_1
+        print colors_t_ch_2
+        colors_t_ch_3 = colors_2
+        print colors_t_ch_3
+        colors_t_ch_4 = colors_3
+        print colors_t_ch_4
 
         # Here we select the main color and the main node
         mn = int(most_common(nodes))
-        minor_n = int(less_common(nodes_4))
+        minor_n = int(less_common(nodes))
         print (mn, 'nodo principal')
         print (minor_n, 'nodo menor')
 
         mc = random.choice(colors_t_ch_2)
-        minor_c = random.choice(colors_t_ch_2)
+        minor_c = random.choice(colors_t_ch_3)
 
         while mc == minor_c:
                 mc = random.choice(colors_t_ch_2)
-                minor_c = random.choice(colors_t_ch_2)
+                minor_c = random.choice(colors_t_ch_3)
 
         print (mc, 'color principal')
         print (minor_c, 'color menor')
 
         if color_number > 2:
-            second_color = random.choice(colors_t_ch_2)
-            while second_color == mc:
-                while second_color == minor_c:
-                    second_color = random.choice(colors_t_ch_2)
-            print (second_color, 'segundo color diferente del color principal y el color menor')
+            second_color_a = random.choice(colors_t_ch_4)
+            while second_color_a == mc:
+                second_color_a = random.choice(colors_t_ch_4)
+            if color_number > 3:
+                second_color_b = random.choice(colors_t_ch_4)
+                while second_color_b == minor_n:
+                    second_color_b = random.choice(colors_t_ch_4)
+
+            print (second_color_a, 'segundo color diferente del color principal y el color menor')
+
 
 
         # Here we assing the main color to the main node
@@ -106,15 +119,29 @@ def process_the_info(c_i, c_o, r_n, t_r):
 
             for node, colors in dic.items():
                 if dic.has_key(mn) and colors == 'default':
-                    dic[node] = second_color
+                    if node != mn:
+                        dic[node] = second_color_a
+                        print 'in mn'
                 elif dic.has_key(minor_n) and colors == 'default':
-                    dic[node] = second_color
+                    if color_number > 3:
+                        if node != minor_n:
+                            dic[node] = second_color_b
+                            print 'in minor_nc'
+                    else:
+                        if node != minor_n:
+                            dic[node] = mc
+                            print 'in minor_nc'
 
         for node in nodes:
             if node == mn:
                 nodes.remove(mn)
             elif node == minor_n:
-                nodes_4.remove(minor_n)
+                nodes.remove(minor_n)
+
+        if len(colors_t_ch_2) >= 1:
+            colors_t_ch_2.remove(mc)
+        if len(colors_t_ch_3) >= 1:
+            colors_t_ch_3.remove(minor_c)
 
     print relations_complete
 
@@ -137,5 +164,3 @@ def process_the_info(c_i, c_o, r_n, t_r):
 
                 if nodes_3 != 0:
                     nodes_3.remove(node)
-
-    return result
