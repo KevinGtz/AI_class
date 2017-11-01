@@ -19,7 +19,6 @@ def index():
         c_o = form.number_of_colors.data
         n_r = form.number_of_relations.data
         t_r = form.relations.data
-        flash('ok')
         results = process_the_info(c_i, c_o, n_r, t_r)
         return redirect(url_for('result', results=results))
 
