@@ -58,7 +58,6 @@ def process_the_info(c_i, c_o, r_n, t_r):
                     if len(dic) < 2:
                         dic[int(node)] = 'default'
             except: node
-    print 'the nodes are %s' % nodes
 
     colors_t_ch = random.sample(colors, color_number)
 
@@ -78,69 +77,75 @@ def process_the_info(c_i, c_o, r_n, t_r):
         colors_t_ch_3 = colors_2
         print colors_t_ch_3
         colors_t_ch_4 = colors_3
-        print colors_t_ch_4
+        # print colors_t_ch_4
 
         # Here we select the main color and the main node
         mn = int(most_common(nodes))
-        minor_n = int(less_common(nodes))
+        minor_n = int(less_common(nodes_4))
         print (mn, 'nodo principal')
         print (minor_n, 'nodo menor')
 
-        mc = random.choice(colors_t_ch_2)
-        minor_c = random.choice(colors_t_ch_3)
+        if len(colors_t_ch_2) > 1:
+            mc = colors_t_ch_2[1]
+        elif len(colors_t_ch_2) == 1:
+            mc = colors_t_ch_2[0]
 
-        the_time = clock()
-        while mc == minor_c:
-                mc = random.choice(colors_t_ch_2)
-                minor_c = random.choice(colors_t_ch_3)
-                if (the_time + .005 < clock()):
-                    break
+        minor_c = colors_t_ch_3[0]
+
+        # the_time = clock()
+        # while mc == minor_c:
+        #         mc = random.choice(colors_t_ch_2)
+        #         minor_c = random.choice(colors_t_ch_3)
+        #         if (the_time + .005 < clock()):
+        #             break
 
         print (mc, 'color principal')
         print (minor_c, 'color menor')
 
-        if color_number > 2:
-            second_color_a = random.choice(colors_t_ch_4)
-            while second_color_a == mc:
-                second_color_a = random.choice(colors_t_ch_4)
-            if color_number > 3:
-                second_color_b = random.choice(colors_t_ch_4)
-                while second_color_b == minor_n:
-                    second_color_b = random.choice(colors_t_ch_4)
-
-            print (second_color_a, 'segundo color diferente del color principal y el color menor')
+        # if color_number > 2:
+        #     second_color_a = random.choice(colors_t_ch_4)
+        #     while second_color_a == mc:
+        #         second_color_a = random.choice(colors_t_ch_4)
+        #     if color_number > 3:
+        #         second_color_b = random.choice(colors_t_ch_4)
+        #         while second_color_b == minor_n:
+        #             second_color_b = random.choice(colors_t_ch_4)
+        #
+        #     print (second_color_a, 'segundo color diferente del color principal y el color menor')
 
 
 
         # Here we assing the main color to the main node
         for dic in relations_complete:
-            if dic.has_key(mn):
-                dic[mn] = mc
-            elif dic.has_key(minor_n):
-                dic[minor_n] = minor_c
-
-            print (dic, 'diccionario con los valores')
-
             for node, colors in dic.items():
-                if dic.has_key(mn) and colors == 'default':
-                    if node != mn:
-                        dic[node] = second_color_a
-                        print 'in mn'
-                elif dic.has_key(minor_n) and colors == 'default':
-                    if color_number > 3:
-                        if node != minor_n:
-                            dic[node] = second_color_b
-                            print 'in minor_nc'
-                    else:
-                        if node != minor_n:
-                            dic[node] = mc
-                            print 'in minor_nc'
+                if node == mn and colors == 'default':
+                    dic[mn] = mc
+                elif node == minor_n and colors == 'default':
+                    dic[minor_n] = minor_c
 
-        for node in nodes:
-            if node == mn:
+            # print (dic, 'diccionario con los valores')
+            #
+            # for node, colors in dic.items():
+            #     if dic.has_key(mn) and colors == 'default':
+            #         if node != mn:
+            #             colors = second_color_a
+            #             print 'in mn'
+            #     elif dic.has_key(minor_n) and colors == 'default':
+            #         if color_number > 3:
+            #             if node != minor_n:
+            #                 colors = second_color_b
+            #                 print 'in minor_nc'
+            #         else:
+            #             if node != minor_n:
+            #                 dic[node] = mc
+            #                 print 'in minor_nc'
+
+        for i in range(len(nodes)):
+            if mn in nodes:
                 nodes.remove(mn)
-            elif node == minor_n:
-                nodes.remove(minor_n)
+        for i in range(len(nodes_4)):
+            if minor_n in nodes_4:
+                nodes_4.remove(minor_n)
 
         if len(colors_t_ch_2) >= 1:
             colors_t_ch_2.remove(mc)
