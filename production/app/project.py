@@ -2,6 +2,7 @@
 
 import random
 from time import clock
+from flask import flash
 
 from functions import most_common, less_common
 
@@ -24,10 +25,10 @@ def process_the_info(c_i, c_o, r_n, t_r):
     color_number = int(c_o)
 
     # We assert tha this varibles aprove the first rule
-    while cities_number < 2 or color_number < 2:
-        print('Deben existir por lo menos dos ciudades y dos colores \n')
-        cities_number = int(c_i)
-        color_number = int(c_o)
+    if cities_number < 2 or color_number < 2:
+        result = 'Deben existir por lo menos dos ciudades y dos colores'
+        flash('Cambia los valores')
+        return result
 
     relationships_number = int(r_n)
 
@@ -36,9 +37,9 @@ def process_the_info(c_i, c_o, r_n, t_r):
         for r in range(cities_number):
             r_max = r_max + r
         if relationships_number > r_max:
-            print('\nEl numero de relaciones seleccionadas supera el numero de las posibles relaciones, es decir coloca un numero menor de relaciones para continuar o incrementa el numero de ciudades. \n')
-            cities_number = int(c_i)
-            relationships_number = int(c_o)
+            result = 'El numero de relaciones seleccionadas supera el numero de las posibles relaciones, es decir coloca un numero menor de relaciones para continuar o incrementa el numero de ciudades.'
+            flash('Cambia los valores')
+            return result
         else:
             print('numero maximo de relaciones:\t' ,r_max)
             break
@@ -59,6 +60,15 @@ def process_the_info(c_i, c_o, r_n, t_r):
                         dic[int(node)] = 'default'
             except: node
 
+    print nodes
+
+    # mn = int(most_common(nodes)) [WIP: Find a solution in the logic]
+    # if int(nodes.count(mn)) > color_number:
+    #
+    #     flash('Cambia los valores')
+    #     result = 'Uno de los nodos posee mas relaciones que los colores posibles a elegir. Tienes que cambiar las relaciones o incrementar el numero de colores.'
+    #     return result
+
     colors_t_ch = random.sample(colors, color_number)
 
     colors_1 = []
@@ -76,8 +86,6 @@ def process_the_info(c_i, c_o, r_n, t_r):
         print colors_t_ch_2
         colors_t_ch_3 = colors_2
         print colors_t_ch_3
-        colors_t_ch_4 = colors_3
-        # print colors_t_ch_4
 
         # Here we select the main color and the main node
         mn = int(most_common(nodes))
@@ -92,28 +100,9 @@ def process_the_info(c_i, c_o, r_n, t_r):
 
         minor_c = colors_t_ch_3[0]
 
-        # the_time = clock()
-        # while mc == minor_c:
-        #         mc = random.choice(colors_t_ch_2)
-        #         minor_c = random.choice(colors_t_ch_3)
-        #         if (the_time + .005 < clock()):
-        #             break
 
         print (mc, 'color principal')
         print (minor_c, 'color menor')
-
-        # if color_number > 2:
-        #     second_color_a = random.choice(colors_t_ch_4)
-        #     while second_color_a == mc:
-        #         second_color_a = random.choice(colors_t_ch_4)
-        #     if color_number > 3:
-        #         second_color_b = random.choice(colors_t_ch_4)
-        #         while second_color_b == minor_n:
-        #             second_color_b = random.choice(colors_t_ch_4)
-        #
-        #     print (second_color_a, 'segundo color diferente del color principal y el color menor')
-
-
 
         # Here we assing the main color to the main node
         for dic in relations_complete:
@@ -122,23 +111,6 @@ def process_the_info(c_i, c_o, r_n, t_r):
                     dic[mn] = mc
                 elif node == minor_n and colors == 'default':
                     dic[minor_n] = minor_c
-
-            # print (dic, 'diccionario con los valores')
-            #
-            # for node, colors in dic.items():
-            #     if dic.has_key(mn) and colors == 'default':
-            #         if node != mn:
-            #             colors = second_color_a
-            #             print 'in mn'
-            #     elif dic.has_key(minor_n) and colors == 'default':
-            #         if color_number > 3:
-            #             if node != minor_n:
-            #                 colors = second_color_b
-            #                 print 'in minor_nc'
-            #         else:
-            #             if node != minor_n:
-            #                 dic[node] = mc
-            #                 print 'in minor_nc'
 
         for i in range(len(nodes)):
             if mn in nodes:
@@ -151,6 +123,8 @@ def process_the_info(c_i, c_o, r_n, t_r):
             colors_t_ch_2.remove(mc)
         if len(colors_t_ch_3) >= 1:
             colors_t_ch_3.remove(minor_c)
+
+        print relations_complete
 
     print relations_complete
 
