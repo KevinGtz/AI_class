@@ -75,30 +75,65 @@ def process_the_info(c_i, c_o, r_n, t_r):
     colors_2 = []
     colors_3 = []
     colors_4 = []
+    colors_5 = []
+    colors_6 = []
     for color in colors_t_ch:
         colors_1.append(color)
         colors_2.append(color)
         colors_3.append(color)
+        colors_4.append(color)
+        colors_5.append(color)
+        colors_6.append(color)
 
-    for i in range(color_number):
+    while True:
 
         colors_t_ch_2 = colors_1
         print colors_t_ch_2
         colors_t_ch_3 = colors_2
         print colors_t_ch_3
 
+        # Back of colors to choose
+        colors_t_ch_4 = colors_3
+        colors_t_ch_5 = colors_4
+        colors_t_ch_6 = colors_5
+        colors_t_ch_7 = colors_6
+
+
         # Here we select the main color and the main node
-        mn = int(most_common(nodes))
-        minor_n = int(less_common(nodes_4))
+        # We nee to put a Try and a except
+        try:
+            mn = int(most_common(nodes))
+            minor_n = int(less_common(nodes_4))
+        except:
+            break
         print (mn, 'nodo principal')
         print (minor_n, 'nodo menor')
 
-        if len(colors_t_ch_2) > 1:
-            mc = colors_t_ch_2[1]
-        elif len(colors_t_ch_2) == 1:
-            mc = colors_t_ch_2[0]
+        if colors_t_ch_2 != [] and colors_t_ch_3 != []:
+            if len(colors_t_ch_2) > 1:
+                mc = colors_t_ch_2[1]
+            elif len(colors_t_ch_2) == 1:
+                mc = colors_t_ch_2[0]
 
-        minor_c = colors_t_ch_3[0]
+            minor_c = colors_t_ch_3[0]
+
+        # First section of adding the back colors
+        elif colors_t_ch_2 == [] and colors_t_ch_4 != []:
+            if len(colors_t_ch_4) > 1:
+                mc = colors_t_ch_4[1]
+            elif len(colors_t_ch_4) == 1:
+                mc = colors_t_ch_4[0]
+
+            minor_c = colors_t_ch_5[0]
+
+        # Second section of adding the back colors
+        elif colors_t_ch_4 == [] and colors_t_ch_6 != []:
+            if len(colors_t_ch_6) > 1:
+                mc = colors_t_ch_6[1]
+            elif len(colors_t_ch_6) == 1:
+                mc = colors_t_ch_6[0]
+
+            minor_c = colors_t_ch_7[0]
 
 
         print (mc, 'color principal')
@@ -124,9 +159,23 @@ def process_the_info(c_i, c_o, r_n, t_r):
         if len(colors_t_ch_3) >= 1:
             colors_t_ch_3.remove(minor_c)
 
-        print relations_complete
+        # First remove of the back colors
+        if len(colors_t_ch_4) >= 1:
+            colors_t_ch_4.remove(mc)
+        if len(colors_t_ch_5) >= 1:
+            colors_t_ch_5.remove(minor_c)
 
-    print relations_complete
+        # Second remove of the back colors
+        if len(colors_t_ch_6) >= 1:
+            colors_t_ch_6.remove(mc)
+        if len(colors_t_ch_7) >= 1:
+            colors_t_ch_7.remove(minor_c)
+        print 'hello'
+
+        # print relations_complete
+    print 'hello2'
+
+    # print relations_complete
 
     nodes_2 = []
     nodes_3 = []
@@ -141,7 +190,7 @@ def process_the_info(c_i, c_o, r_n, t_r):
     for node in nodes_2:
         if node not in nodes_3:
             nodes_3.append(int(node))
-    print nodes_3
+    # print nodes_3
 
     for relation in relations_complete:
         for node in relation:

@@ -6,7 +6,7 @@ from forms import MainForm
 bootstrap = Bootstrap()
 
 app = Flask(__name__)
-app.debug = True
+#app.debug = True
 app.secret_key = 's3cr3t'
 
 bootstrap.init_app(app)
