@@ -5,3 +5,7 @@ def most_common(lst):
 
 def less_common(lst):
     return min(set(lst), key=lst.count)
+
+def foo():
+    pass
+    
